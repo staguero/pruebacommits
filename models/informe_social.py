@@ -94,7 +94,7 @@ class InformeSocial(models.Model):
     paciente_tipo_documento = fields.Selection(related='paciente_id.tipo_documento', readonly=False)
     paciente_numero_documento = fields.Integer(related='paciente_id.numero_documento', readonly=False)
     paciente_fuente_paciente_ids = fields.One2many(related='paciente_id.fuente_paciente_ids')
-    paciente_diagnostico_paciente_ids = fields.One2many(related='paciente_id.diagnostico_paciente_ids', string='Diagnósticos CIE10')
+    paciente_diagnostico_paciente_ids = fields.One2many(related='paciente_id.diagnostico_paciente_ids', string='Diagnósticos CIE-10')
     paciente_cuil_cuit = fields.Char(related='paciente_id.cuil_cuit', readonly=False)
     paciente_fecha_nacimiento = fields.Date(related='paciente_id.fecha_nacimiento', readonly=False)
     paciente_edad = fields.Integer(related='paciente_id.edad')
