@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="cron_po_pac_suspender_pacientes_en_estado_urgencia" model="ir.cron">
+        <field name="name">PO Pacientes: Suspender pacientes con más de 30 días en estado de urgencia</field>
+        <field name="model_id" ref="model_po_pac_paciente"/>
+        <field name="state">code</field>
+        <field name="code">model.suspender_pacientes_en_estado_urgencia()</field>
+        <field name='interval_number'>1</field>
+        <field name='interval_type'>days</field>
+        <field name="numbercall">-1</field>
+    </record>
+</odoo>

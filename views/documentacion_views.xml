@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <!--Vista árbol Documentación-->
+    <record id="view_po_pac_documentacion_tree" model="ir.ui.view">
+        <field name="name">po_pac.documentacion.tree</field>
+        <field name="model">po_pac.documentacion</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="paciente_id"/>
+                <field name="tipo_documentacion_id"/>
+                <field name="fecha_vencimiento"/>
+            </tree>
+        </field>
+    </record>
+
+    <!--Vista Form Documentación-->
+    <record id="view_po_pac_documentacion_form" model="ir.ui.view">
+        <field name="name">po_pac.documentacion.form</field>
+        <field name="model">po_pac.documentacion</field>
+        <field name="arch" type="xml">
+            <form delete="0">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="paciente_id"/>
+                            <field name="tipo_documentacion_id"/>
+                        </group>
+                        <group>
+                            <field name="archivo_adjunto" filename="archivo_adjunto_nombre"/>
+                            <field name="archivo_adjunto_nombre" invisible="1"/>
+                            <field name="link_archivo"/>
+                            <field name="fecha_vencimiento"/>
+                            <field name="observaciones"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+</odoo>

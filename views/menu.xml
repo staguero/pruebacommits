@@ -1,0 +1,177 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <!--Pacientes-->
+    <record id="action_po_pac_pacientes" model="ir.actions.act_window">
+        <field name="name">Pacientes</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">po_pac.paciente</field>
+        <field name="view_mode">tree,kanban,form,pivot,graph,activity</field>
+<!--        <field name="view_id" ref="view_damsu_afiliaciones_afiliados_tree"/>-->
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+<!--        <field name="search_view_id" ref="view_damsu_afiliaciones_afiliado_search"/>-->
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Crea un paciente
+          </p><p>
+            ...
+          </p>
+        </field>
+    </record>
+
+    <!--Obras sociales-->
+    <record id="action_po_pac_obras_sociales" model="ir.actions.act_window">
+        <field name="name">Obras sociales</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">po_pac.obra_social</field>
+        <field name="view_mode">tree,form</field>
+<!--        <field name="view_id" ref="view_damsu_afiliaciones_afiliados_tree"/>-->
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+<!--        <field name="search_view_id" ref="view_damsu_afiliaciones_afiliado_search"/>-->
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Crea una obra social
+          </p><p>
+            ...
+          </p>
+        </field>
+    </record>
+
+    <!--Profesionales médicos-->
+    <record id="action_po_pac_profesionales_medicos" model="ir.actions.act_window">
+        <field name="name">Profesionales médicos</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">po_pac.profesional_medico</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Crea un profesional médico
+          </p><p>
+            ...
+          </p>
+        </field>
+    </record>
+
+    <!--Especialidades médicas-->
+    <record id="action_po_pac_especialidades_medicas" model="ir.actions.act_window">
+        <field name="name">Especialidades médicas</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">po_pac.especialidad_medica</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Crea una especialidad médica
+          </p><p>
+            ...
+          </p>
+        </field>
+    </record>
+
+    <!--Diagnósticos CIE 10-->
+    <record id="action_po_pac_diagnosticos_cie_10" model="ir.actions.act_window">
+        <field name="name">Diagnósticos CIE10</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">po_pac.diagnostico_cie_10</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Crea un diagnóstico CIE10
+          </p><p>
+            ...
+          </p>
+        </field>
+    </record>
+
+    <!--Diagnósticos pacientes-->
+    <record id="action_po_pac_diagnosticos_pacientes" model="ir.actions.act_window">
+        <field name="name">Diagnósticos</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">po_pac.diagnostico_paciente</field>
+        <field name="view_mode">tree,form,graph,pivot</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            No se encontraron diagnósticos
+          </p><p>
+            ...
+          </p>
+        </field>
+    </record>
+
+    <!--Informes sociales-->
+    <record id="action_po_pac_informes_sociales" model="ir.actions.act_window">
+        <field name="name">Informes sociales</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">po_pac.informe_social</field>
+        <field name="view_mode">tree,form,graph,pivot,search</field>
+        <field name="domain">[]</field>
+        <field name="context">{"create": False}</field>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            No se encontraron informes sociales
+          </p><p>
+            ...
+          </p>
+        </field>
+    </record>
+
+    <!--Hospitales-->
+    <record id="action_po_pac_hospitales" model="ir.actions.act_window">
+        <field name="name">Hospitales</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">po_pac.hospital</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Crea un hospital
+          </p><p>
+            ...
+          </p>
+        </field>
+    </record>
+
+    <!--Manual de usuario-->
+<!--    <record model="ir.actions.act_url" id="action_manual_usuario">-->
+<!--        <field name="name">Manual de Usuario</field>-->
+<!--        <field name="url">https://docs.google.com/document/d/1vBBkgd_wW_pUj-Am2btxNHG-DpfBBE9mF9OUsU3mzPQ/edit?usp=sharing</field>-->
+<!--        <field name="target">new</field>-->
+<!--    </record>-->
+
+
+    <!--Menúes principales-->
+    <menuitem id="po_pac_menu_pacientes"  name="Pacientes" sequence="6"/>
+<!--    <menuitem id="po_menu_pacientes"  name="Pacientes" sequence="2" web_icon="damsu_afiliaciones,static/description/icono_afiliaciones.png"/>-->
+
+    <!--Submenúes de Pacientes-->
+        <menuitem id="po_pac_menu_pacientes_pacientes" name="Pacientes" parent="po_pac_menu_pacientes" sequence="1" action="action_po_pac_pacientes"/>
+        <menuitem id="po_pac_menu_pacientes_profesionales" name="Profesionales" parent="po_pac_menu_pacientes" sequence="2" action="action_po_pac_profesionales_medicos"/>
+        <menuitem id="po_pac_menu_pacientes_diagnosticos" name="Diagnósticos" parent="po_pac_menu_pacientes" sequence="3" action="action_po_pac_diagnosticos_pacientes"/>
+        <menuitem id="po_pac_menu_pacientes_informes_sociales" name="Informes sociales" parent="po_pac_menu_pacientes" sequence="4" action="action_po_pac_informes_sociales"/>
+        <menuitem id="po_pac_menu_pacientes_configuracion" name="Configuración" parent="po_pac_menu_pacientes" sequence="5"/>
+    <!--Submenúes de Pacientes -> Configuración-->
+        <menuitem id="po_pac_menu_pacientes_configuracion_obras_sociales" name="Obras sociales" parent="po_pac_menu_pacientes_configuracion" sequence="1" action="action_po_pac_obras_sociales"/>
+        <menuitem id="po_pac_menu_pacientes_configuracion_especialidades_medicas" name="Especialidades médicas" parent="po_pac_menu_pacientes_configuracion" sequence="2" action="action_po_pac_especialidades_medicas"/>
+        <menuitem id="po_pac_menu_pacientes_configuracion_diagnosticos_cie10" name="Diagnósticos CIE10" parent="po_pac_menu_pacientes_configuracion" sequence="3" action="action_po_pac_diagnosticos_cie_10"/>
+        <menuitem id="po_pac_menu_pacientes_configuracion_hospitales" name="Hospitales" parent="po_pac_menu_pacientes_configuracion" sequence="4" action="action_po_pac_hospitales"/>
+
+
+    <!--Muestra el menú Contactos solo para el grupo po_pac_menu_contactos-->
+    <record model="ir.ui.menu" id="contacts.menu_contacts">
+        <field name="groups_id" eval="[(6,0,[ref('po_pac_menu_contactos')])]"/>
+    </record>
+</odoo>
+
+
+
+

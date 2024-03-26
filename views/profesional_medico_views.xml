@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <!--Vista árbol Profesional médico-->
+    <record id="view_po_pac_profesional_medico_tree" model="ir.ui.view">
+        <field name="name">po_pac.profesional_medico.tree</field>
+        <field name="model">po_pac.profesional_medico</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="matricula"/>
+                <field name="especialidad_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <!--Vista Form Profesional médico-->
+    <record id="view_po_pac_profesional_medico_form" model="ir.ui.view">
+        <field name="name">po_pac.profesional_medico.form</field>
+        <field name="model">po_pac.profesional_medico</field>
+        <field name="arch" type="xml">
+            <form delete="0">
+                <sheet>
+                    <div class="oe_title">
+                        <div class="o_row">
+                            <h1>
+                                <field name="name" placeholder="Nombre"/>
+                            </h1>
+                        </div>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="matricula"/>
+                            <field name="especialidad_id"/>
+                        </group>
+                        <group>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!--Vista de búsqueda Profesional médico-->
+    <record id="view_po_pac_profesional_medico_search" model="ir.ui.view">
+        <field name="name">po_pac.profesional_medico.search</field>
+        <field name="model">po_pac.profesional_medico</field>
+        <field name="arch" type="xml">
+            <search string="Profesional médico">
+                <field name="name" string="Nombre/Matrícula" filter_domain="['|', ('name','ilike',self), ('matricula','ilike',self)]"/>
+            </search>
+        </field>
+    </record>
+
+</odoo>

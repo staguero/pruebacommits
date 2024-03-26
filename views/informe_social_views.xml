@@ -1,0 +1,196 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <!-- Acción de Rechazar informe social-->
+    <record id="action_po_pac_rechazar_informe_social" model="ir.actions.act_window">
+        <field name="name">Rechazar informe social</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">po_pac.rechazar_informe_social</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+        <!-- Vista de formulario de Rechazar informe social-->
+    <record model="ir.ui.view" id="view_po_pac_rechazar_informe_social_form">
+        <field name="name">po_pac.rechazar_informe_social.tree</field>
+        <field name="model">po_pac.rechazar_informe_social</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    En caso de rechazar el Informe Social, el Paciente pasará a estado "Rechazado" y no podrá acceder a los beneficios del programa.
+                    <group>
+                        <group>
+                            <field name="motivo_rechazo"/>
+                        </group>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="guardar_y_cerrar" string="Guardar y cerrar" type="object" class="btn-primary"/>
+                    <button string="Cancelar" class="btn btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <!--Vista Form Informe Social-->
+    <record id="view_po_pac_informe_social_form" model="ir.ui.view">
+        <field name="name">po_pac.informe_social.form</field>
+        <field name="model">po_pac.informe_social</field>
+        <field name="arch" type="xml">
+            <form duplicate="0" delete="0">
+                <header>
+                <field name="estado" widget="statusbar" readonly="1" force_save=""/>
+                <button
+                        string="Pasar a pendiente de rev."
+                        name="pasar_a_pendiente_revision"
+                        class="btn-primary"
+                        type="object"
+                        invisible="estado != 'Borrador'"
+                        confirm="¿Está seguro de pasar a Pendiente de revisión?"/>
+                <button
+                        string="Volver a borrador"
+                        name="pasar_a_borrador"
+                        class="btn-secondary"
+                        type="object"
+                        invisible="estado != 'Pendiente de revisión'"
+                        confirm="¿Está seguro de volver a Borrador?"/>
+                <button
+                        string="Aprobar"
+                        name="pasar_a_aprobado"
+                        class="btn-primary"
+                        type="object"
+                        invisible="estado != 'Pendiente de revisión'"
+                        confirm="¿Está seguro de APROBAR el informe?"/>
+                <button name="%(po_pacientes.action_po_pac_rechazar_informe_social)d"
+                        string="Rechazar"
+                        type="action"
+                        invisible="estado != 'Pendiente de revisión'"
+                        class="btn-danger"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <div class="o_row">
+                            <h1>
+                                <field name="paciente_id" readonly="1" force_save="1"/>
+                            </h1>
+                        </div>
+                    </div>
+                    <group string="Resultado" invisible="estado not in ['Aprobado', 'Rechazado']">
+                        <field name="estado" readonly="1" force_save="1"/>
+                        <field name="fecha_aprobacion" invisible="estado != 'Aprobado'" readonly="1" force_save="1"/>
+                        <field name="user_id_aprobador" invisible="estado != 'Aprobado'" readonly="1" force_save="1"/>
+                        <field name="fecha_rechazo" invisible="estado != 'Rechazado'" readonly="1" force_save="1"/>
+                        <field name="user_id_rechazador" invisible="estado != 'Rechazado'" readonly="1" force_save="1"/>
+                        <field name="motivo_rechazo" invisible="estado != 'Rechazado'" readonly="1" force_save="1"/>
+                    </group>
+                    <group>
+                        <group string="Datos del paciente">
+                            <field name="paciente_mobile" string="Teléfono celular"/>
+                            <label for="paciente_tipo_documento" string="Documento"/>
+                            <div class="o_row">
+                                <field name="paciente_tipo_documento" nolabel="1"/>
+                                <field name="paciente_numero_documento" widget="string" nolabel="1"/>
+                            </div>
+                            <field name="paciente_cuil_cuit"/>
+                            <field name="paciente_fecha_nacimiento"/>
+                            <field name="paciente_edad"/>
+                            <field name="paciente_estado_civil"/>
+                            <field name="paciente_profesion_id"/>
+                            <field name="paciente_obra_social_id"/>
+                            <field name="paciente_country_id_nacimiento"/>
+                            <field name="paciente_state_id_nacimiento"/>
+                            <field name="paciente_tipo_residencia"/>
+                            <label for="paciente_direccion" string="Dirección"/>
+                            <div>
+                                <field name="paciente_direccion" placeholder="Dirección" nolabel="1"/>
+                                <i style="margin-right:2px;"/>
+                                    <field name="paciente_zip" placeholder="CP" class="oe_inline"/>
+                                    <i style="margin-right:4px;"/>
+                                <div class="o_row">
+                                    <field name="paciente_country_id" placeholder="País" nolabel="1" class="oe_inline"/>
+                                    <i style="margin-right:2px;"/>
+                                    <field name="paciente_state_id" placeholder="Provincia" nolabel="1" class="oe_inline"/>
+                                </div>
+                                <div class="o_row">
+                                    <field name="paciente_departamento_id" placeholder="Departamento" nolabel="1" class="oe_inline"/>
+                                    <i style="margin-right:2px;"/>
+                                    <field name="paciente_localidad_id" placeholder="Localidad" nolabel="1" class="oe_inline"/>
+                                </div>
+                            </div>
+                        </group>
+                        <group string="Datos de salud">
+                            <field name="paciente_fuente_paciente_ids" widget="many2many_tags"/>
+                            <field name="internado" readonly="estado != 'Borrador'"/>
+                            <field name="sala_internacion" invisible="internado != 'Si'" readonly="estado != 'Borrador'"/>
+                            <field name="cama_internacion" invisible="internado != 'Si'" readonly="estado != 'Borrador'"/>
+                            <field name="paciente_diagnostico_paciente_ids" readonly="True" widget="many2many_tags"/>
+                            <field name="diagnostico" required="1" readonly="estado != 'Borrador'"/>
+                            <field name="prestaciones" required="1" readonly="estado != 'Borrador'"/>
+                            <field name="antecedentes" readonly="estado != 'Borrador'"/>
+                            <field name="tratamientos_pendientes" readonly="estado != 'Borrador'"/>
+                            <field name="participacion_otro_programa_provincial" readonly="estado != 'Borrador'"/>
+                            <field name="otro_programa_provincial" invisible="participacion_otro_programa_provincial == False" readonly="estado != 'Borrador'"/>
+                        </group>
+                        <group string="Situación familiar">
+                            <field name="composicion_familiar" readonly="estado != 'Borrador'"/>
+                            <field name="cantidad_hijos" invisible="composicion_familiar != 'Si'" readonly="estado != 'Borrador'"/>
+                            <field name="tipo_vinculo_familiar" invisible="composicion_familiar != 'Si'" readonly="estado != 'Borrador'"/>
+                        </group>
+                        <group string="Situación económica">
+                            <field name="descripcion_situacion_economica" required="1" readonly="estado != 'Borrador'"/>
+                        </group>
+                        <group string="Situación habitacional">
+                            <field name="tipo_vivienda" required="1" readonly="estado != 'Borrador'"/>
+                            <field name="cantidad_habitaciones_vivienda" required="1" readonly="estado != 'Borrador'"/>
+                            <field name="tipo_construccion_vivienda" required="1" readonly="estado != 'Borrador'"/>
+                            <field name="servicios_basicos_vivienda" required="1" readonly="estado != 'Borrador'"/>
+                            <field name="tipo_ubicacion_vivienda" required="1" readonly="estado != 'Borrador'"/>
+                            <field name="banio_vivienda" required="1" readonly="estado != 'Borrador'"/>
+                        </group>
+                        <group string="Diagnóstico social">
+                            <field name="descripcion_diagnostico_social" required="1" readonly="estado != 'Borrador'"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>  
+        </field>
+    </record>
+
+
+    <!--Vista árbol Informe social-->
+    <record id="view_po_pac_informe_social_tree" model="ir.ui.view">
+        <field name="name">po_pac.informe_social.tree</field>
+        <field name="model">po_pac.informe_social</field>
+        <field name="arch" type="xml">
+            <tree duplicate="0" delete="0">
+                <field name="create_date" string="Fecha de creación"/>
+                <field name="paciente_id"/>
+                <field name="paciente_tipo_documento"/>
+                <field name="paciente_numero_documento"/>  
+                <field name="estado"/>
+                <field name="create_uid" string="Creado por"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_po_pac_informe_social_search" model="ir.ui.view">
+        <field name="name">po_pac.informe_social.search</field>
+        <field name="model">po_pac.informe_social</field>
+        <field name="arch" type="xml">
+            <search string="Búsqueda de Informes Sociales">
+                <field name="paciente_id" string="Paciente"/>
+                <field name="paciente_numero_documento" string="Nro. Documento"/> 
+                <group expand="1" string="Agrupar Por">
+                    <filter string="Creado por" name="create_uid" context="{'group_by':'create_uid'}"/>
+                    <filter string="Estado" name="estado" context="{'group_by':'estado'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+
+</odoo>

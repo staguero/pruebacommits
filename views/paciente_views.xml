@@ -1,0 +1,269 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <!--Acción de Documentación llamada por el botón en el paciente-->
+    <record id="action_po_pac_documentacion_paciente_active_id" model="ir.actions.act_window">
+        <field name="name">Documentación</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">po_pac.documentacion</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('paciente_id', '=', active_id)]</field>
+<!--        <field name="context">{'group_by': 'tipo_documentacion_id'}</field>-->
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Crea documentación del paciente
+            </p>
+            <p>
+                ...
+            </p>
+        </field>
+    </record>
+
+    <!--Acción de Informes sociales llamada por el botón en el paciente-->
+    <record id="action_po_pac_informe_social_paciente_active_id" model="ir.actions.act_window">
+        <field name="name">Informes sociales</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">po_pac.informe_social</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'create': True}</field>
+        <field name="domain">[('paciente_id', '=', active_id)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Crea un nuevo informe social
+            </p>
+            <p>
+                ...
+            </p>
+        </field>
+    </record>
+
+    <!--Vista árbol Paciente-->
+    <record id="view_po_pac_paciente_tree" model="ir.ui.view">
+        <field name="name">po_pac.paciente.tree</field>
+        <field name="model">po_pac.paciente</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="create_date" string="Fecha de creación"/>
+                <field name="name"/>
+                <field name="tipo_documento"/>
+                <field name="numero_documento"/>
+                <field name="fecha_nacimiento"/>
+                <field name="sexo_biologico"/>
+                <field name="estado_civil"/>
+                <field name="mobile" string="Teléfono celular"/>
+                <field name="email"/>
+                <field name="estado"/>
+            </tree>
+        </field>
+    </record>
+    
+    <!--Vista Form Paciente-->
+    <record id="view_po_pac_paciente_form" model="ir.ui.view">
+        <field name="name">po_pac.paciente.form</field>
+        <field name="model">po_pac.paciente</field>
+        <field name="arch" type="xml">
+            <form duplicate="0" delete="0">
+                <header>
+                    <field name="estado" widget="statusbar" options="{'clickable': '1'}"/>
+                    <div class="oe_button_box" name="button_box">
+                    <button name="%(po_pacientes.action_po_pac_documentacion_paciente_active_id)d"
+                        type="action" class="oe_stat_button" icon="fa-paperclip"
+                        context="{'default_paciente_id': active_id}">
+                        <span class="o_stat_text">Documentación</span>
+                    </button>
+                    <button name="%(po_pacientes.action_po_pac_informe_social_paciente_active_id)d"
+                        type="action" class="oe_stat_button" icon="fa-id-card"
+                        context="{'default_paciente_id': active_id}">
+                        <span class="o_stat_text">Informes sociales</span>
+                    </button>
+                    </div>
+                </header>
+                <sheet>
+                    <field name="image_1920" widget="image" class="oe_avatar" options="{&quot;preview_image&quot;: &quot;image_128&quot;}"/>
+                    <div class="oe_title">
+                        <div class="o_row">
+                            <h1>
+                                <field name="name" readonly="1" force_save="1"/>
+                                <i style="margin-left:20px;"/>
+                                <field name="tipo_documento" readonly="1" force_save="1"/>
+                                <i style="margin-left:6px;"/>
+                                <field name="numero_documento" readonly="1" force_save="1"/>
+                            </h1>
+                        </div>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="id" invisible="1"/>
+                            <field name="fecha_obito" invisible="estado != 'Fallecido'"/>
+                            <field name="es_urgencia" invisible="id != False"/>
+                            <field name="motivo_urgencia" invisible="es_urgencia == False and motivo_urgencia == False" required="es_urgencia == True"/>
+                            <field name="nombre" placeholder="Nombre/s"/>
+                            <field name="apellido" placeholder="Apellido/s"/>
+                            <label for="tipo_documento" string="Documento"/>
+                            <div class="o_row">
+                                <field name="tipo_documento" nolabel="1"/>
+                                <field name="numero_documento" widget="string" nolabel="1"/>
+                            </div>
+                            <field name="cuil_cuit"/>
+                            <field name="fecha_nacimiento" required="es_urgencia == False"/>
+                            <field name="edad"/>
+                            <field name="estado_civil"/>
+                            <field name="profesion_id"/>
+                        </group>
+                        <group>
+                            <field name="mobile" string="Teléfono celular" required="es_urgencia == True"/>
+                            <field name="phone" string="Teléfono fijo"/>
+                            <field name="email"/>
+                            <field name="sexo_biologico" required="es_urgencia == False"/>
+                            <field name="sexo_civil" required="es_urgencia == False"/>
+                            <field name="country_id_nacimiento" required="es_urgencia == False"/>
+                            <field name="state_id_nacimiento" required="es_urgencia == False"/>
+                            <field name="tipo_residencia"/>
+                        </group>
+                        <group string="Obra social">
+                            <field name="obra_social_id" required="es_urgencia == False"/>
+                            <field name="obra_social_nro_afiliado"/>
+                            <field name="obra_social_observaciones"/>
+                        </group>
+                        <group string="Dirección">
+                            <label for="direccion" string="Dirección"/>
+                            <div>
+                                <field name="direccion" placeholder="Dirección" nolabel="1" required="es_urgencia == False"/>
+                                <i style="margin-right:2px;"/>
+                                    <field name="zip" placeholder="CP" class="oe_inline" required="es_urgencia == False"/>
+                                    <i style="margin-right:4px;"/>
+                                <div class="o_row">
+                                    <field name="country_id" placeholder="País" nolabel="1" class="oe_inline" required="es_urgencia == False"/>
+                                    <i style="margin-right:2px;"/>
+                                    <field name="state_id" placeholder="Provincia" nolabel="1" class="oe_inline" required="es_urgencia == False"/>
+                                </div>
+                                <div class="o_row">
+                                    <field name="departamento_id" placeholder="Departamento" nolabel="1"
+                                           class="oe_inline"/>
+                                    <i style="margin-right:2px;"/>
+                                    <field name="localidad_id" placeholder="Localidad" nolabel="1" class="oe_inline"/>
+                                </div>
+                            </div>
+                            <field name="misma_direccion_residencia"/>
+                            <label for="direccion_residencia" string="Dirección de residencia"/>
+                            <div>
+                                <field name="direccion_residencia" placeholder="Dirección" nolabel="1" required="es_urgencia == False"/>
+                                <i style="margin-right:2px;"/>
+                                    <field name="zip_residencia" placeholder="CP" class="oe_inline" required="es_urgencia == False"/>
+                                    <i style="margin-right:4px;"/>
+                                <div class="o_row">
+                                    <field name="country_id_residencia" placeholder="País" nolabel="1" class="oe_inline" required="es_urgencia == False"/>
+                                    <i style="margin-right:2px;"/>
+                                    <field name="state_id_residencia" placeholder="Provincia" nolabel="1" class="oe_inline" required="es_urgencia == False"/>
+                                </div>
+                                <div class="o_row">
+                                    <field name="departamento_id_residencia" placeholder="Departamento" nolabel="1"
+                                           class="oe_inline"/>
+                                    <i style="margin-right:2px;"/>
+                                    <field name="localidad_id_residencia" placeholder="Localidad" nolabel="1" class="oe_inline"/>
+                                </div>
+                            </div>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="page_grupo_familiar" string="Grupo familiar/Acompañantes">
+                            <field name="familiar_paciente_ids">
+                                <tree editable="bottom">
+                                    <field name="nombre_familiar"/>
+                                    <field name="parentesco_id" />
+                                    <field name="telefono" />
+                                    <field name="country_id_nacionalidad"/>
+                                    <field name="observaciones" />
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="page_diagnosticos" string="Diagnósticos">
+                            <field name="diagnostico_paciente_ids">
+                                <tree>
+                                    <field name="fecha_diagnostico"/>
+                                    <field name="localizacion_diagnostico_id"/>
+                                    <field name="base_diagnostico_id"/>
+                                    <field name="primarios_multiples"/>
+                                    <field name="principal"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="page_fuentes" string="Fuentes">
+                            <field name="fuente_paciente_ids">
+                                <tree>
+                                    <field name="hospital_id_fuente"/>
+                                    <field name="profesional_medico_id"/>
+                                    <field name="especialidad_medica_id"/>
+                                    <field name="fuente_activa"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="page_trayectoria_sistema_salud" string="Trayectoria en sist. de salud">
+                            <field name="trayectoria_sistema_salud_ids">
+                                <tree editable="bottom">
+                                    <field name="atencion_primera_vez"/>
+                                    <field name="hospital_id"/>
+                                    <field name="servicio_salud_id"/>
+                                    <field name="profesional_medico_id"/>
+                                    <field name="fecha_pedido_estudios"/>
+                                    <field name="fecha_estudios"/>
+                                    <field name="dificultad_obtener_turno"/>
+                                    <field name="pedido_de_tratamiento"/>
+                                    <field name="vulnerabilidad_social"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="page_historial_estados" string="Historial de estados">
+                            <field name="historial_estado_paciente_ids">
+                                <tree create="0" edit="0" delete="0">
+                                    <field name="estado"/>
+                                    <field name="fecha_desde" />
+                                    <field name="fecha_hasta" />
+                                    <field name="user_id" />
+                                </tree>
+                                <form>
+                                    <group>
+                                        <group>
+                                            <field name="estado" readonly="1"/>
+                                            <field name="user_id" readonly="1"/>
+                                            <field name="observaciones" readonly="1"/>
+                                        </group>
+                                        <group>
+                                            <field name="fecha_desde" readonly="1"/>
+                                            <field name="fecha_hasta" readonly="1"/>
+                                        </group>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>  
+        </field>
+    </record>
+
+    <!--Vista de búsqueda Paciente-->
+    <record id="view_po_pac_paciente_search" model="ir.ui.view">
+        <field name="name">po_pac.paciente.search</field>
+        <field name="model">po_pac.paciente</field>
+        <field name="arch" type="xml">
+            <search string="Pacientes">
+                <field name="name" string="Nombre/Nro doc." filter_domain="['|', ('name','ilike',self), ('numero_documento','ilike',self)]"/>
+                <separator/>
+<!--                <filter name="habilitado" help="Habilitado" domain="[('estado_afiliado_id.habilitado', '=', True)]"/>-->
+
+                <group expand="1" string="Agrupar por">
+                    <filter string="Estado" name="group_by_estado" context="{'group_by':'estado'}"/>
+                    <separator/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <!--Vista árbol Diagnóstico Paciente-->
+    <record id="view_po_pac_diagnostico_paciente_tree" model="ir.ui.view">
+        <field name="name">po_pac.diagnostico_paciente.tree</field>
+        <field name="model">po_pac.diagnostico_paciente</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="paciente_id"/>
+                <field name="fecha_diagnostico"/>
+                <field name="diagnostico_cie_10_id"/>
+                <field name="localizacion_diagnostico_id"/>
+                <field name="base_diagnostico_id"/>
+                <field name="primarios_multiples"/>
+                <field name="principal"/>
+            </tree>
+        </field>
+    </record>
+
+    <!--Vista Form Diagnóstico Paciente-->
+    <record id="view_po_pac_diagnostico_paciente_form" model="ir.ui.view">
+        <field name="name">po_pac.diagnostico_paciente.form</field>
+        <field name="model">po_pac.diagnostico_paciente</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <div class="o_row">
+                            <h1>
+                                <field name="paciente_id" placeholder="Paciente"/>
+                            </h1>
+                        </div>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="fecha_diagnostico"/>
+                            <field name="diagnostico_cie_10_id"/>
+                            <field name="localizacion_diagnostico_id"/>
+                            <field name="base_diagnostico_id"/>
+                            <field name="primarios_multiples"/>
+                            <field name="principal"/>
+                        </group>
+                        <group>
+                            <field name="estadio_diagnostico_id"/>
+                            <field name="t_diagnostico_id"/>
+                            <field name="n_diagnostico_id"/>
+                            <field name="m_diagnostico_id"/>
+                            <field name="anatomia_patologica"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!--Vista de búsqueda Diagnostico paciente-->
+    <record id="view_po_pac_diagnostico_paciente_search" model="ir.ui.view">
+        <field name="name">po_pac.diagnostico_paciente.search</field>
+        <field name="model">po_pac.diagnostico_paciente</field>
+        <field name="arch" type="xml">
+            <search string="Diagnósticos">
+                <field name="paciente_id" string="Paciente" filter_domain="['|', ('paciente_id.name','ilike',self), ('paciente_id.numero_documento','ilike',self)]"/>
+                <field name="diagnostico_cie_10_id" string="Diagnóstico CIE10"/>
+                <field name="localizacion_diagnostico_id" string="Localización"/>
+                <field name="base_diagnostico_id" string="Base"/>
+                <separator/>
+<!--                <filter name="habilitado" help="Habilitado" domain="[('estado_afiliado_id.habilitado', '=', True)]"/>-->
+
+                <group expand="1" string="Agrupar por">
+                    <filter string="Diagnóstico CIE10" name="group_by_diagnostico_cie_10_id" context="{'group_by':'diagnostico_cie_10_id'}"/>
+                    <filter string="Localización" name="group_by_localizacion_diagnostico_id" context="{'group_by':'localizacion_diagnostico_id'}"/>
+                    <filter string="Base" name="group_by_base_diagnostico_id" context="{'group_by':'base_diagnostico_id'}"/>
+                    <filter string="Fecha" name="group_by_fecha_diagnostico" context="{'group_by':'fecha_diagnostico'}"/>
+                    <separator/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+</odoo>

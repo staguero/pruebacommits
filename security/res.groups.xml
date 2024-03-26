@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="po_pac_menu_contactos" model="res.groups">
+            <field name="name">Menú Contactos</field>
+            <field name="category_id" ref="po_pacientes_application"/>
+        </record>
+
+        <record id="po_pac_lectura" model="res.groups">
+            <field name="name">Lectura</field>
+            <field name="category_id" ref="po_pacientes_application"/>
+        </record>
+
+        <record id="po_pac_usuario" model="res.groups">
+            <field name="name">Usuario</field>
+            <field name="category_id" ref="po_pacientes_application"/>
+            <field name="implied_ids" eval="[(4, ref('po_pac_lectura'))]"/>
+        </record>
+
+        <record id="po_pac_administrador" model="res.groups">
+            <field name="name">Administrador</field>
+            <field name="category_id" ref="po_pacientes_application"/>
+            <field name="implied_ids" eval="[(4, ref('po_pac_usuario'))]"/>
+            <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+        </record>
+        
+    </data>     
+</odoo>

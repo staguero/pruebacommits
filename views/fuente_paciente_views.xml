@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <!--Vista árbol Fuente Paciente-->
+    <record id="view_po_pac_fuente_paciente_tree" model="ir.ui.view">
+        <field name="name">po_pac.fuente_paciente.tree</field>
+        <field name="model">po_pac.fuente_paciente</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="hospital_id_fuente"/>
+                <field name="profesional_medico_id"/>
+                <field name="especialidad_medica_id"/>
+                <field name="fuente_activa"/>
+            </tree>
+        </field>
+    </record>
+
+    <!--Vista Form Fuente Paciente-->
+    <record id="view_po_pac_fuente_paciente_form" model="ir.ui.view">
+        <field name="name">po_pac.fuente_paciente.form</field>
+        <field name="model">po_pac.fuente_paciente</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <div class="o_row">
+                            <h1>
+                                <field name="paciente_id" placeholder="Paciente"/>
+                            </h1>
+                        </div>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="hospital_id_fuente"/>
+                            <field name="profesional_medico_id"/>
+                            <field name="especialidad_medica_id"/>
+                        </group>
+                        <group>
+                            <field name="fuente_activa"/>
+                            <field name="observaciones"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+</odoo>

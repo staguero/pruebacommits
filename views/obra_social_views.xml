@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <!--Vista árbol Obra social-->
+    <record id="view_po_pac_obra_social_tree" model="ir.ui.view">
+        <field name="name">po_pac.obra_social.tree</field>
+        <field name="model">po_pac.obra_social</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="suspende_adhesion"/>
+            </tree>
+        </field>
+    </record>
+
+    <!--Vista Form Obra social-->
+    <record id="view_po_pac_obra_social_form" model="ir.ui.view">
+        <field name="name">po_pac.obra_social.form</field>
+        <field name="model">po_pac.obra_social</field>
+        <field name="arch" type="xml">
+            <form delete="0">
+                <sheet>
+                    <div class="oe_title">
+                        <div class="o_row">
+                            <h1>
+                                <field name="name" placeholder="Nombre"/>
+                            </h1>
+                        </div>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="suspende_adhesion"/>
+                        </group>
+                        <group>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+</odoo>
